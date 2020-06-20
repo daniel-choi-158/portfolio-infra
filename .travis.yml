@@ -4,19 +4,31 @@ language: bash
 
 # Export variables
 env:
-  - tf_version=0.12.24 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
+  global:
+    - tf_version=0.12.24 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
+    - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
 
 # Only build pushes to master branch
 branches:
   only:
     - master
 
-# Install dependencies
+# Install dependencies (Terraform, gcloud)
 before_install:
   - wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
   - unzip terraform_"$tf_version"_linux_amd64.zip
   - sudo mv terraform /usr/local/bin/
   - rm terraform_"$tf_version"_linux_amd64.zip
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components update kubectl
+  - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
+  - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
 
 # Terraform Plan and Apply
 # Plan only on pull requests, Apply on merged code
