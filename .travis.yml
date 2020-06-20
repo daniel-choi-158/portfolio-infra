@@ -28,7 +28,6 @@ before_install:
   - gcloud --quiet components update
   - gcloud --quiet components update kubectl
   - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
-  - cat ${HOME}/gcloud-service-key.json
   - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
 
 # Terraform Plan and Apply
