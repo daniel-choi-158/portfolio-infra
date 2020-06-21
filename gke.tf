@@ -15,9 +15,7 @@ variable "gke_num_nodes" {
 
 variable "zone" {
   description = "main AZ in which to deploy resources"
-  
 }
-
 
 # GKE cluster
 resource "google_container_cluster" "primary" {
