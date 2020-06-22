@@ -35,7 +35,7 @@ resource "kubernetes_deployment" "portfolio-frontend" {
         container {
           image = "danielchoi158/portfolio-frontend:latest"
           name  = "portfolio-frontend-container"
-          image_pull_policy = "always"
+          image_pull_policy = "Always"
 
           port {
             container_port = 80
