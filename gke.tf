@@ -1,5 +1,6 @@
 data "google_container_engine_versions" "australiasoutheast1a" {
-  provider       = "google-beta"
+  provider       = google-beta
+  project = var.project_id
   location       = var.zone
   version_prefix = "1.15."
 }
