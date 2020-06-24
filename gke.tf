@@ -28,7 +28,7 @@ variable "zone" {
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.zone
-  master_version = data.google_container_engine_versions.australiasoutheast1a.latest_master_version
+  min_master_version = data.google_container_engine_versions.australiasoutheast1a.latest_master_version
 
   remove_default_node_pool = true
   initial_node_count       = 1
