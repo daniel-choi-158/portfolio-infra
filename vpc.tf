@@ -21,6 +21,24 @@ resource "google_compute_subnetwork" "subnet" {
 
 }
 
+resource "google_dns_managed_zone" "danielchoime" {
+  name        = "danielchoime-zone"
+  dns_name    = "danielchoi.me."
+  description = "DNS zone for danielchoi.me"
+}
+
+resource "google_dns_record_set" "root" {
+  name = google_dns_managed_zone.danielchoime.dns_name
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.danielchoime.name
+
+  rrdatas = [kubernetes_service.portfolio-frontend-service.load_balancer_ingress[0].ip]
+}
+
+
+
 output "region" {
   value       = var.region
   description = "region"
