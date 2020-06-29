@@ -69,8 +69,7 @@ resource "kubernetes_service" "portfolio-frontend-service" {
       port        = 80
       target_port = 80
     }
-
-    type = "LoadBalancer"
+  #  type = "LoadBalancer"
   }
 }
 
