@@ -5,7 +5,7 @@ language: bash
 # Export variables
 env:
   global:
-    - tf_version=0.12.24 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
+    - tf_version=0.12.28 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
     - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
 cache:
   directories:
